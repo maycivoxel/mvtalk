@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<title>MVTalk Guide</title>
+<!--
+  MVTalk Guide
+  Copyright (c) 2026 mayci_voxel/cairode
+  Licensed under the MIT Licence.
+-->
+<style>
+  body {
+    font-family: sans-serif;
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    line-height: 1.5;
+  }
+  h1 {
+    margin-bottom: 0.25rem;
+  }
+  h2 {
+    margin-top: 2.5rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.25rem;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 0.1rem 0.3rem;
+    font-size: 0.95em;
+  }
+  #toc ul {
+    padding-left: 1.2rem;
+  }
+  footer {
+    margin-top: 3rem;
+    color: grey;
+    font-size: 0.8rem;
+  }
+  footer a {
+    color: grey;
+  }
+  hr {
+    margin: 2rem 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>MVTalk Guide</h1>
+<p>Whether you just want to make your text say funny things or you want to actually squeeze a proper vocal line out of this, this page has you covered!</p>
+
+<nav id="toc">
+<strong>Contents</strong>
+<ul>
+  <li><a href="#part1">Part 1: For casual users</a></li>
+  <li><a href="#part2">Part 2: For producers and technical users</a></li>
+  <li><a href="#part3">Part 3: How does MVTalk work?</a></li>
+  <li><a href="#part4">Part 4: You IMPORT MIDIs!?!?</a></li>
+  <li><a href="#part5">Part 5: Can I use this in my own work? (YES! YES!)</a></li>
+  <li><a href="#part6">Part 6: What else am I allowed to do with this?</a></li>
+  <li><a href="#part7">Part 7: Forking? I can FORK this!!? (yes)</a></li>
+  <li><a href="#part8">Part 8: Why did you make this, anyway?</a></li>
+  <li><a href="#part9">Part 9: Planned things!</a></li>
+</ul>
+</nav>
+
+<hr>
+
+<h2 id="part1">Part 1: For casual users</h2>
+<p>MVTalk is a little web toy that turns a string of odd square-bracket instructions into a voice saying things. You type something like <code>[ah:PTCH=+2][BRK][m][ah]</code> into the box, hit play, and my voice does its best to comply. No install, no faff, just a page and an internet connection.</p>
+<p>You don't need to understand any of the technical bits to have a poke around. Type some brackets in, mash the play button, see what happens. Worst case it sounds like a haunted kazoo, best case you've made something genuinely fun.</p>
+<p>If you're curious what's actually being loaded behind the scenes, here's the sample list file and the raw audio bank itself:</p>
+<ul>
+  <li><a href="https://maycithegal.github.io/mvtalk/rf.txt">rf.txt</a> (the sample index file MVTalk reads on startup)</li>
+  <li><a href="https://maycithegal.github.io/mvtalk/bank.zip">audio bank (.zip)</a> (the actual voice samples, straight from the source)</li>
+</ul>
+<p>(Note: the exact filename of the archive is whatever's listed under <code>ARCHIVE=</code> in rf.txt, so if I've renamed something and forgotten to update this link, that's on me.)</p>
+
+<h2 id="part2">Part 2: For producers and technical users</h2>
+<p>Right, the actual syntax. Every instruction lives inside square brackets:</p>
+<ul>
+  <li><code>[name]</code> plays a phoneme at its base settings.</li>
+  <li><code>[name:KEY=value;KEY2=value2]</code> plays a phoneme with one or more config keys set, separated by semicolons.</li>
+  <li><code>[BRK]</code> is a bit of silence, roughly the length of a natural pause between syllables if you don't specify anything.</li>
+  <li><code>[BRK:DUR=500]</code> is a bit of silence, exactly 500 milliseconds this time, because you asked nicely.</li>
+</ul>
+<p>The config keys currently supported:</p>
+<ul>
+  <li><code>PTCH</code>: pitch shift in semitones. <code>+2</code> goes up, <code>-3</code> goes down. This is a genuine pitch shift, not a playback speed hack, so your phoneme doesn't suddenly turn into a chipmunk or a doom growl just because you moved a few semitones. Leave it out and it plays at base pitch.</li>
+  <li><code>VOL</code>: volume in decibels relative to base. <code>+</code> for louder, <code>-</code> for quieter. Leave it out for base volume.</li>
+  <li><code>DUR</code>: duration in milliseconds. Only works on vowels (consonants are short percussive things by nature and don't take kindly to being stretched). If the number you give is shorter than the clip, it gets cut. If it's longer, the clip boomerangs, playing forward then backward then forward again until it hits the length you asked for. It's a cheap trick but it works surprisingly well for held notes.</li>
+</ul>
+<p>rf.txt is a plain text index with three sections, <code>[VOWEL]</code>, <code>[CONSONANT]</code> and <code>[MISC]</code>, one phoneme name per line, plus a <code>[META]</code> section stating the audio format and which archive to pull the actual files from. MVTalk appends the format extension to each name, digs the matching file out of the archive, and that's your sample loaded. Nothing clever, just a lookup table.</p>
+
+<h2 id="part3">Part 3: How does MVTalk work?</h2>
+<p>Under the bonnet it's a fairly small pile of JavaScript doing four things in sequence:</p>
+<ol>
+  <li>It fetches and parses <code>rf.txt</code>, then pulls the referenced archive apart with JSZip so it knows which sample belongs to which phoneme name.</li>
+  <li>It parses whatever you typed into the box, walking through the square brackets and building a list of 'play this phoneme with these settings' or 'insert this much silence' instructions.</li>
+  <li>For each phoneme, if you asked for a pitch or volume change, it renders that individual clip offline through Tone.js (pitch shifting properly, not just speeding the sample up), and separately handles the duration stretch/cut logic on the raw sample data.</li>
+  <li>All the little rendered clips and silences get stitched together into one long audio buffer, which either gets played straight out of your speakers or bounced into a WAV file for downloading.</li>
+</ol>
+<p>Everything happens client side in your browser. Nothing you type gets sent anywhere. The only network requests are grabbing the sample archive and a couple of external JS libraries off a CDN, both of which are logged to the console if you'd like to watch it happen.</p>
+
+<h2 id="part4">Part 4: You IMPORT MIDIs!?!?</h2>
+<p>Yes! Load a .mid file in and MVTalk will turn the first track's notes into a phoneme sequence for you automatically, defaulting to an 'ah' vowel for every note, with pitch worked out relative to middle C and duration taken straight from the note length. Gaps between notes become <code>[BRK]</code>s. It's not going to replace a proper vocal synth engine, but it'll get you a singable skeleton in about two seconds flat.</p>
+<p>The story behind this feature is a bit of a tale, actually. I originally recorded these samples with the intention of making a proper UTAU voice bank out of them. Configured the oto.ini, the whole nine yards. Then I went to actually test the thing in OpenUTAU and it crashed. Immediately. Not 'after a bit of use', not 'on a specific edge case', just instantly, every single time, across multiple attempts. At that point I figured if it can't even survive being opened in OpenUTAU, it stood no chance in the original UTAU application either (which is a much fussier beast).</p>
+<p>So rather than spend a week debugging someone else's engine, I just built my own tiny thing that would actually let these samples do something. MIDI import was the natural next step, since half the point of recording a voice bank in the first place is to sing melodies with it, and I wasn't about to let that idea die just because OpenUTAU had a strop.</p>
+
+<h2 id="part5">Part 5: Can I use this in my own work? (YES! YES!)</h2>
+<p>Yes! The audio samples are CC0, meaning they're effectively public domain. Use them in a song, a game, a daft video, an actual serious release, whatever you fancy. You don't need to ask, you don't need to credit me, though obviously it's appreciated if you do.</p>
+<p>If you'd like to add a 'feat.' credit to a track, just write it as 'feat. MVTalk', since the underlying bank doesn't really have a proper name of its own. You can also list it alongside other vocal synths, for example 'feat. Kasane Teto SV and MVTalk', and nobody will bat an eyelid.</p>
+
+<h2 id="part6">Part 6: What else am I allowed to do with this?</h2>
+<p>Quite a lot, really:</p>
+<ul>
+  <li>Chop up, remix, pitch shift, reverse, or otherwise mangle the samples in your own DAW or audio editor.</li>
+  <li>Build your own front end for the samples that isn't this website, using rf.txt and the archive directly.</li>
+  <li>Redistribute the samples elsewhere, bundle them into other tools, whatever.</li>
+  <li>Use the MVTalk code itself (this webpage) as a base for something entirely different, per the MIT Licence.</li>
+</ul>
+<p>The one thing I'd gently ask is that you don't try and pass the raw, unedited samples off as your own original recordings of your own voice. Beyond that, genuinely, go nuts.</p>
+
+<h2 id="part7">Part 7: Forking? I can FORK this!!? (yes)</h2>
+<p>Yes, go for it. The code is MIT licensed, which in plain English means you can copy it, modify it, rebrand it, sell a version of it if you're feeling ambitious, as long as you keep the original licence notice knocking about somewhere in there. Fix a bug I've missed, add a feature I haven't got round to, make it look nicer (the current CSS budget was approximately zero pence), whatever takes your fancy.</p>
+<p>If you make something majourly cool with it I'd love to hear about it, but that's entirely optional. The repo link is in the footer of every page, forks and pull requests are welcome (^_^)</p>
+
+<h2 id="part8">Part 8: Why did you make this, anyway?</h2>
+<p>Mostly explained in Part 4, but the short version is: I recorded a voice bank, the software meant to use it fell over the moment I looked at it funny, and I refused to let a perfectly good set of samples just sit in a folder doing nothing. So I made my own bracket-based scripting language and a small web app to interpret it, because apparently that was easier than getting OpenUTAU to behave.</p>
+<p>There's also just something satisfying about having full control over the whole pipeline, from the syntax down to the WAV encoder. No dependency on a specific application, no proprietary voicebank format, just a text file, a zip, and some JavaScript.</p>
+
+<h2 id="part9">Part 9: Planned things!</h2>
+<p>Whether any of this actually happens is a separate question entirely, but here's what's rattling around in my head:</p>
+<ul>
+  <li><strong>Multiple bank support.</strong> Right now MVTalk is hardwired to whatever rf.txt sits next to it. The plan is to eventually let you load in other banks too (hopefully by converting the imported archive to Base64 and then storing that in localStorage), with the currently bundled one just being the default. This probably won't happen for a while.</li>
+  <li><strong>Built in filters.</strong> Vibrato and reverb as their own config keys, so you could do something like <code>[ah:VIBR=...]</code> without leaving the app. Also not happening any time soon, so for now just chuck your output into Audacity or similar and do it properly there, it'd probably sound better that way anyways.</li>
+  <li><strong>Automatic Japanese to MVTalk conversion.</strong> Using context to take Japanese lyrics and spit out a phoneme sequence automatically. This one's a big ask, especially since it would need to actually understand phonetic context to break words down sensibly, so it's very much a 'nice idea sitting on a shelf' at the moment rather than an active plan. Would be especially handy for Japanese vocalsynth creators though, so I haven't given up on it.</li>
+</ul>
+<p>If any of these excite you and you fancy having a go yourself before I get round to it, see Part 7 (^_^)</p>
+
+<hr>
+
+<footer>
+<p>
+made with &lt;3 by mayci_voxel/cairode
+<br>
+this utility is licensed under the MIT Licence, and its related audio data is under CC0
+<br>
+feel free to use my samples in your own works (if you want, idc)
+<br>
+<a href="https://www.github.com/maycivoxel/mvtalk">source code</a> <a href="https://maycivoxel.github.io/mvtalk/">back to mvtalk...</a>
+</p>
+</footer>
+
+</body>
+</html>
