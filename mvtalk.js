@@ -87,7 +87,19 @@ async function loadSamples() {
   console.log('[MVTalk] Parsed rf.txt! ', rf);
 
   const format = (rf.meta.FORMAT || 'wav').toLowerCase();
-  const archiveName = rf.meta.ARCHIVE;
+   
+  // Check the state of the alternative bank checkbox
+  const useAlt = document.getElementById('altBankToggle')?.checked;
+  let archiveName = rf.meta.ARCHIVE;
+
+  if (useAlt) {
+    if (rf.meta.ALTARCHIVE) {
+      archiveName = rf.meta.ALTARCHIVE;
+      console.log('[MVTalk] Alternative bank selected.');
+    } else {
+      console.warn('[MVTalk] ALTARCHIVE requested, but not found in rf.txt. Falling back to ARCHIVE.');
+    }
+  }
 
   if (!archiveName) {
     console.error('[MVTalk] rf.txt META section has no ARCHIVE key.');
@@ -486,6 +498,10 @@ document.getElementById('playBtn').addEventListener('click', playSequence);
 document.getElementById('stopBtn').addEventListener('click', stopSequence);
 document.getElementById('downloadBtn').addEventListener('click', downloadSequence);
 document.getElementById('reloadBtn').addEventListener('click', () => {
+  state.samples = {};
+  loadSamples();
+});
+document.getElementById('altBankToggle').addEventListener('change', () => {
   state.samples = {};
   loadSamples();
 });
