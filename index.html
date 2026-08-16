@@ -76,6 +76,33 @@ feel free to use my samples in your own works (if you want, idc)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.28/build/Midi.js"></script>
+
+<script>
+  window.addEventListener("load", () => {
+    const status = document.getElementById("status");
+
+    if (!navigator.onLine) {
+      status.textContent = "No internet connection. MVTalk requires an active connection to load its external libraries.";
+      return;
+    }
+
+    if (typeof Tone === "undefined") {
+      status.textContent = "Unable to load Tone.js. Please check your internet connection and try again.";
+      return;
+    }
+
+    if (typeof JSZip === "undefined") {
+      status.textContent = "Unable to load JSZip. Please check your internet connection and try again.";
+      return;
+    }
+
+    if (typeof Midi === "undefined") {
+      status.textContent = "Unable to load the MIDI library. Please check your internet connection and try again.";
+      return;
+    }
+  });
+</script>
+  
 <script src="mvtalk.js"></script>
 
 </body>
