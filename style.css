@@ -1,4 +1,14 @@
-  body {
+  @font-face {
+    font-family: 'Jersey 15';
+    src: url('/mvtalk/15.ttf') format('truetype');
+  }
+
+@font-face {
+    font-family: 'Tiny5';
+    src: url('/mvtalk/t5.ttf') format('truetype');
+}
+
+body {
     font-family: sans-serif;
     max-width: 720px;
     margin: 2rem auto;
