@@ -1,6 +1,7 @@
 [META]
 FORMAT="wav"
 ARCHIVE="bank.zip"
+ALTARCHIVE="bankalt.zip"
 
 [VOWEL]
 ah
