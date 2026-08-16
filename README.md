@@ -91,3 +91,5 @@ See Part 9 of the guide for the same list with slightly more personality attache
 Made by mayci_voxel/cairode (^_^)
 
 Built on top of [Tone.js](https://tonejs.github.io/), [JSZip](https://stuk.github.io/jszip/) and [@tonejs/midi](https://github.com/Tonejs/Midi), all pulled in via CDN, under their respective licences.
+
+'Jersey 15' and 'Tiny5' are licensed under the SIL Open Font Licence.
