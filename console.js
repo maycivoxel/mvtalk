@@ -64,7 +64,7 @@ function screech() {
     'SKREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE';
 
   console.log(text);
-  return text;
+  
 }
 
 function gay() {
@@ -120,10 +120,6 @@ function nyo() {
 
   console.log(art);
   console.log('Dejiko? Is that you?');
-
-  const text = 'Dejiko? Is that you?';
-  console.log(text);
-  return text;
 }
 
 /* Make the functions explicitly available from the browser console. */
