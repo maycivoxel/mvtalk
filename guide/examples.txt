@@ -57,3 +57,30 @@ EXAMPLES USING PITCH AND DURATION
 [ee:PTCH=+12;DUR=80][ee:PTCH=+10;DUR=80][ee:PTCH=+8;DUR=80][ee:PTCH=+6;DUR=80]
 [ee:PTCH=+4;DUR=80][ee:PTCH=+2;DUR=80][ee:PTCH=0;DUR=80][ee:PTCH=-2;DUR=80]
 [ee:PTCH=-4;DUR=80][ee:PTCH=-6;DUR=80]
+
+
+
+THIS THING THAT DOESN'T FALL INTO ANY CATEGORY
+
+> i don't know anymore
+[a][a][a][a][a][a][a][a]
+[brk:dur=1]
+[k][k][k][k][g][g][g][g]
+[brk:dur=1]
+[t][d][t][d][t][d][t][d]
+[brk:dur=5]
+[s][sh][s][sh][s][sh][s][sh]
+[brk:dur=10]
+[m][n][m][n][m][n][m][n]
+[brk:dur=25]
+[w][r][l][w][r][l][w][r][l]
+[brk:dur=50]
+[ah:DUR=1][ee:DUR=1][ih:DUR=1][oh:DUR=1][uh:DUR=1]
+[brk:dur=100]
+[b][p][b][p][b][p][b][p][b][p]
+[brk:dur=250]
+[th][dh][th][dh][th][dh][th][dh]
+[brk:dur=500]
+[w][uh][r2][l][d][brk:dur=1][w][uh][r2][l][d]
+[brk:dur=1000]
+[j][uh][s][t][brk:dur=1][t][r][y][ih][ng]
