@@ -5,6 +5,8 @@
     padding: 0 1rem;
     line-height: 1.4;
     background-color: #0b0b0b;
+    background: linear-gradient(135deg, #070707 0%, #0d1117 50%, #050505 100%);
+    background-attachment: fixed;
     color: #e2e2e2;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -17,6 +19,7 @@
     aspect-ratio: 2388 / 1080;
     display: block;
     margin: 0 auto 1.5rem auto;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
   }
   textarea {
     width: 100%;
@@ -120,3 +123,14 @@
     background: #222222;
     margin: 2rem 0;
   }
+ul {
+  list-style: none; /* Removes the default bullet */
+  padding-left: 1.5rem;
+}
+ul li::before {
+  content: "~ ";
+  margin-left: -1.25rem;
+  position: absolute;
+  color: #00e5ff;
+
+}
