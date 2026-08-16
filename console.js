@@ -119,7 +119,7 @@ function nyo() {
                       cgmm`;
 
   console.log(art);
-  console.log('Dejiko? Is that you?');
+  console.log('Dejiko-chan? Is that you?');
 }
 
 /* Make the functions explicitly available from the browser console. */
