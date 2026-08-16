@@ -7,15 +7,8 @@
     font-family: 'Tiny5';
     src: url('/mvtalk/t5.ttf') format('truetype');
 }
-
-body {
-    font-family: 'Jersey 15', sans-serif;
-    max-width: 720px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    line-height: 1.4;
   body {
-    font-family: sans-serif;
+    font-family: 'Jersey 15', sans-serif;
     max-width: 720px;
     margin: 2rem auto;
     padding: 0 1rem;
@@ -227,10 +220,9 @@ body {
     color: #ffb700;
   }
   nav#toc ul {
-    margin-bottom: 0;
-content: "~ ";
+  margin-bottom: 0;
+  content: "~ ";
   margin-left: -1.25rem;
   position: absolute;
   color: #00e5ff;
-
 }
