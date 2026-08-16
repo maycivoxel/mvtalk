@@ -1,0 +1,59 @@
+These are examples of valid things you can synthesise with MVTalk using its proper syntax!
+
+
+
+
+EXAMPLES OF WORDS
+
+> 'Hello!'
+[h][eh][l][oh]
+
+
+> 'Gaster'
+[g][ah][s][t][eh][r2]
+
+
+
+EXAMPLES USING BREAKS
+
+> 'World domination. The robots will take over the world. Ha ha ha, just kidding!'
+[w][uh][r2][l][d][brk][d][oh][m][ih][n][ay][ch][uh][n]
+[brk:dur=300]
+[th][ee][brk][r1][oh][b][aw][t][s][brk][w][ih][l][brk][t][ay][ck][brk][oh][v][uh][r2][brk][th][ee][brk][w][uh][r2][l][d]
+[brk:dur=500]
+[h][aw][brk][h][aw][brk][h][aw]
+[brk:dur=600]
+[j][uh][s][t][brk][ck][ih][d][ee][n][g]
+
+
+> 'I am gay'
+[ie][brk][ah][m][brk][g][ay]
+
+
+
+EXAMPLES USING PITCH AND DURATION
+
+> 'I (inhale) am (inhale) so (inhale) ANGRY!! GRRRRR!!!!'
+[ie][brk][inh][brk:dur=300][ah][m][brk][inh][brk]
+[s][oh][inh][brk:dur=400]
+[ay:ptch=+5][n:ptch=+5][g:ptch=+5][r2:ptch=+5][ee:ptch=+5]
+[brk:dur=600]
+[g][r2][r2][r2][r2][r2][r2][r2][r2][r2][r2][r2]
+
+
+> whatever the fuck this thing is lmao
+[ee:PTCH=-6;DUR=80][ee:PTCH=-4;DUR=80][ee:PTCH=-2;DUR=80][ee:PTCH=0;DUR=80]
+[ee:PTCH=+2;DUR=80][ee:PTCH=+4;DUR=80][ee:PTCH=+6;DUR=80][ee:PTCH=+8;DUR=80]
+[ee:PTCH=+10;DUR=80][ee:PTCH=+12;DUR=80][ee:PTCH=+14;DUR=80]
+[ee:PTCH=+16;DUR=80][ee:PTCH=+18;DUR=80][ee:PTCH=+20;DUR=80]
+[ee:PTCH=+18;DUR=80][ee:PTCH=+16;DUR=80][ee:PTCH=+14;DUR=80]
+[ee:PTCH=+12;DUR=80][ee:PTCH=+10;DUR=80][ee:PTCH=+8;DUR=80][ee:PTCH=+6;DUR=80]
+[ee:PTCH=+4;DUR=80][ee:PTCH=+2;DUR=80][ee:PTCH=0;DUR=80][ee:PTCH=-2;DUR=80]
+[ee:PTCH=-4;DUR=80][ee:PTCH=-6;DUR=80][ee:PTCH=-4;DUR=80][ee:PTCH=-2;DUR=80]
+[ee:PTCH=0;DUR=80][ee:PTCH=+2;DUR=80][ee:PTCH=+4;DUR=80][ee:PTCH=+6;DUR=80]
+[ee:PTCH=+8;DUR=80][ee:PTCH=+10;DUR=80][ee:PTCH=+12;DUR=80][ee:PTCH=+14;DUR=80]
+[ee:PTCH=+16;DUR=80][ee:PTCH=+18;DUR=80][ee:PTCH=+20;DUR=80]
+[ee:PTCH=+18;DUR=80][ee:PTCH=+16;DUR=80][ee:PTCH=+14;DUR=80]
+[ee:PTCH=+12;DUR=80][ee:PTCH=+10;DUR=80][ee:PTCH=+8;DUR=80][ee:PTCH=+6;DUR=80]
+[ee:PTCH=+4;DUR=80][ee:PTCH=+2;DUR=80][ee:PTCH=0;DUR=80][ee:PTCH=-2;DUR=80]
+[ee:PTCH=-4;DUR=80][ee:PTCH=-6;DUR=80]
