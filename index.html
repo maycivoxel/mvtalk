@@ -52,15 +52,18 @@
 
 <button id="playBtn">Play</button>
 <button id="stopBtn">Stop</button>
-<button id="downloadBtn">Download as WAV</button>
-<button id="reloadBtn">Reload samples</button>
+<button id="importMvtBtn" title="Import MVT" aria-label="Import MVT">Import</button>
+<button id="exportMvtBtn" title="Export MVT" aria-label="Export MVT">Export</button>
+<input type="file" id="mvtInput" accept=".mvt,text/plain" hidden>
+<button id="downloadBtn">Download</button>
+<button id="reloadBtn">Reload</button>
 <br>
 
 <label style="cursor: pointer;">
-<input type="checkbox" id="altBankToggle"> Switch to alternative bank
+<input type="checkbox" id="altBankToggle"> Switch to alt. bank
 </label>
 <br>
-<label for="midiInput">Import MIDI (only supports one track):</label><br>
+<label for="midiInput">Import MIDI (only supports one track)</label><br>
 <input type="file" id="midiInput" accept=".mid,.midi">
 
 <p id="status">Loading samples...</p>
