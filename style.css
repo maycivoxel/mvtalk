@@ -61,11 +61,11 @@ button {
   background-color: #1f1f1f;
   color: #ffffff;
   border: 1px solid #444444;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.6rem;
   border-radius: 0px;
   cursor: pointer;
   font-family: 'Jersey 15', sans-serif;
-  font-size: 1.25rem;
+  font-size: 0.9rem;
   font-weight: bold;
 }
 
